@@ -1,4 +1,4 @@
-import { CourseModel } from "../../models";
+import { CourseModel } from '../../models';
 
 export function CourseComponent(props: any) {
   const course: CourseModel = props.course;

@@ -1,4 +1,4 @@
-import { CourseModel } from "../../models";
+import { CourseModel } from '../../models';
 import { CourseComponent } from '../CourseComponent/Course.Component';
 
 export function CoursesList(props: any): JSX.Element {
