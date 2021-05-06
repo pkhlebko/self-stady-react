@@ -1,4 +1,4 @@
-import { CourseModel } from '../../models';
+import {CourseModel} from '../../models';
 
 export function CourseComponent(props: any) {
   const course: CourseModel = props.course;
@@ -6,7 +6,10 @@ export function CourseComponent(props: any) {
 
   return (
     <div>
-      <h3><span className="date">{date.toDateString()}</span> - {title}</h3>
+      <h3>
+        <span className="date">{date.toDateString()}</span> - {title}
+      </h3>
       <p>{description}</p>
-    </div>);
+    </div>
+  );
 }

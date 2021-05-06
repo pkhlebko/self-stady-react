@@ -1,17 +1,13 @@
-import { CourseModel } from '../../models';
-import { CourseComponent } from '../CourseComponent/Course.Component';
+import {CourseModel} from '../../models';
+import {CourseComponent} from '../CourseComponent/Course.Component';
 
 export function CoursesList(props: any): JSX.Element {
   const courses: CourseModel[] = props.courses;
-
-  console.log(courses)
-
-  const cL = courses.map((course: any) =>
+  const cL = courses.map((course: CourseModel) => (
     <li className="courses-list" key={course.id.toString()}>
       <CourseComponent course={course}></CourseComponent>
-    </li>);
+    </li>
+  ));
 
-  return (
-    <ul>{cL}</ul>
-  );
+  return <ul>{cL}</ul>;
 }
