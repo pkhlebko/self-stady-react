@@ -25,6 +25,7 @@ class App extends React.Component<{}, AppState> {
     };
 
     this.updateSearchString = this.updateSearchString.bind(this);
+    this.loadPage = this.loadPage.bind(this);
   }
 
   async componentDidMount() {
@@ -33,6 +34,11 @@ class App extends React.Component<{}, AppState> {
 
   render() {
     const coursesData = this.state.searchString === '' ? this.state.courses : this.state.coursesFound;
+    let dataSection = <p>Courses not found.</p>;
+
+    if (coursesData && coursesData.length > 0) {
+      dataSection = <CoursesList courses={coursesData}></CoursesList>;
+    }
 
     return (
       <div className="App container">
@@ -48,14 +54,12 @@ class App extends React.Component<{}, AppState> {
         <SearchField updateSearchString={this.updateSearchString}></SearchField>
 
         <div className="row">
-          <div className="column">
-            <CoursesList courses={coursesData}></CoursesList>
-          </div>
+          <div className="column">{dataSection}</div>
         </div>
 
         <div className="row">
           <div className="two-thirds column">
-            <button>Load more</button>
+            <button onClick={this.loadPage}>Load more</button>
           </div>
           <div className="one-third column">© 2021 Courses App</div>
         </div>
@@ -91,6 +95,10 @@ class App extends React.Component<{}, AppState> {
   }
 
   private loadSearchResults(searchString: string): Promise<boolean> {
+    if (searchString === '') {
+      return Promise.resolve(false);
+    }
+
     this.setLoading(true);
 
     return getSearchData(searchString)
