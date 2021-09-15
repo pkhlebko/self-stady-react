@@ -1,4 +1,4 @@
-import { CourseModel } from '../models';
+import {CourseModel} from '../models';
 
 export const mockCourses: CourseModel[] = [
   {
@@ -7,7 +7,7 @@ export const mockCourses: CourseModel[] = [
     description: 'Angular 4 course',
     authorID: 'pablo',
     date: new Date(),
-    rating: 3
+    rating: 3,
   },
   {
     id: 2,
@@ -15,6 +15,6 @@ export const mockCourses: CourseModel[] = [
     description: 'Angular.js course',
     authorID: 'mike',
     date: new Date(),
-    rating: 5
-  }
+    rating: 5,
+  },
 ];
