@@ -1,123 +1,55 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
-import {CoursesList} from './components/CourceList/Course-ListComponent';
-import {SearchField} from './components/SearchField/Search-Field.component';
-import {CourseModel} from './models';
-import {getPageData, getSearchData} from './services/courses.service';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {CoursesPageComponent} from './components/CoursesPage/CoursesPage.component';
+import {LoginPageComponent} from './components/LoginPage/LoginPage.component';
+import {EditCoursePageComponent} from './components/EditCoursePage/EditCoursePage.component';
+import {
+  getLoggedUser,
+  saveUserIdToLocalStorage,
+  eraseUserIdFromLocalStorage,
+  UserModel,
+} from './services/users.service';
+import {HeaderComponent} from './components/HeaderComponent/header.component';
 
-export interface AppState {
-  courses: CourseModel[];
-  coursesFound?: CourseModel[];
-  lastPage: number;
-  loading: boolean;
-  searchString: string;
-}
+const App = (): JSX.Element => {
+  let [currentUser, setCurrentUser] = useState<UserModel | undefined>();
 
-class App extends React.Component<{}, AppState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      loading: false,
-      courses: [],
-      coursesFound: [],
-      lastPage: 0,
-      searchString: '',
-    };
+  useEffect(() => {
+    getLoggedUser().then((user) => user && setCurrentUser(user));
+  }, []);
 
-    this.updateSearchString = this.updateSearchString.bind(this);
-    this.loadPage = this.loadPage.bind(this);
+  function logInUser(user: UserModel) {
+    setCurrentUser(user);
+    saveUserIdToLocalStorage(user);
   }
 
-  async componentDidMount() {
-    await this.loadPage();
+  function logOutUser() {
+    eraseUserIdFromLocalStorage();
+    setCurrentUser(undefined);
   }
 
-  render() {
-    const coursesData = this.state.searchString === '' ? this.state.courses : this.state.coursesFound;
-    let dataSection = <p>Courses not found.</p>;
-
-    if (coursesData && coursesData.length > 0) {
-      dataSection = <CoursesList courses={coursesData}></CoursesList>;
-    }
-
-    return (
+  return (
+    <Router>
       <div className="App container">
-        <div className="row">
-          <div className="one-third column">
-            <h1>Courses app</h1>
-          </div>
-          <div className="two-thirds column">
-            <a href="#login">Login</a>
-          </div>
-        </div>
+        <HeaderComponent user={currentUser} logOutUser={logOutUser}></HeaderComponent>
 
-        <SearchField updateSearchString={this.updateSearchString}></SearchField>
+        <Switch>
+          <Route exact path="/">
+            <CoursesPageComponent />
+          </Route>
+          <Route path="/login">
+            <LoginPageComponent updateUser={logInUser} />
+          </Route>
+          <Route path="/edit">
+            <EditCoursePageComponent user={currentUser} />
+          </Route>
+        </Switch>
 
-        <div className="row">
-          <div className="column">{dataSection}</div>
-        </div>
-
-        <div className="row">
-          <div className="two-thirds column">
-            <button onClick={this.loadPage}>Load more</button>
-          </div>
-          <div className="one-third column">© 2021 Courses App</div>
-        </div>
+        <div className="one-third column">© 2021 Courses App</div>
       </div>
-    );
-  }
-
-  updateSearchString(searchString: string) {
-    this.setState({searchString});
-
-    this.loadSearchResults(searchString);
-  }
-
-  private setLoading(state: boolean) {
-    this.setState({loading: state});
-  }
-
-  private loadPage(): Promise<boolean> {
-    const nextPage = this.state.lastPage + 1;
-
-    this.setLoading(true);
-
-    return getPageData(nextPage)
-      .then((data) => {
-        const courses = [...this.state.courses, ...data.map(this.dataToCourse)];
-
-        this.setState({courses, lastPage: nextPage});
-
-        return true;
-      })
-      .catch(() => false)
-      .finally(() => this.setLoading(false));
-  }
-
-  private loadSearchResults(searchString: string): Promise<boolean> {
-    if (searchString === '') {
-      return Promise.resolve(false);
-    }
-
-    this.setLoading(true);
-
-    return getSearchData(searchString)
-      .then((data) => {
-        const coursesFound = data.map(this.dataToCourse);
-
-        this.setState({coursesFound});
-
-        return true;
-      })
-      .catch(() => false)
-      .finally(() => this.setLoading(false));
-  }
-
-  private dataToCourse(course: any) {
-    const date = new Date(course.date);
-
-    return {...course, date} as CourseModel;
-  }
-}
+    </Router>
+  );
+};
 
 export default App;
