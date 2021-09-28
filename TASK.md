@@ -42,3 +42,15 @@
 
 https://videoportal.epam.com/video/ZoD3bYaO
 https://reactrouter.com/web/guides/quick-start
+
+## 4. Homeassignment
+
+0. Добавить Redux для управления состоянием в приложении.
+1. Создать сторы для данных кусов и пользователей.
+2. Дать возможность каждому авторизированному пользователю выставить курсам оценку от 1 до 5.
+
+Материалы:
+
+https://videoportal.epam.com/playlist/qaBVb4ag/play/mYRxBo7W
+https://redux.js.org/tutorials/essentials/part-1-overview-concepts
+https://www.youtube.com/watch?v=hpR-X2hTcqg
