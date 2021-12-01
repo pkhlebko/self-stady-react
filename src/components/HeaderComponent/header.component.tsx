@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {UserModel} from '../../services/users.service';
+import { UserModel } from '../../models';
 
 export interface HeaderComponentPropsModel {
   user?: UserModel;

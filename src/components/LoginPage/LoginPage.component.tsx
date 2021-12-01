@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import {logUserIn, UserModel} from '../../services/users.service';
+import {UserModel} from '../../models';
+import {logUserIn} from '../../services/users.service';
 
 export const LoginPageComponent = (props: {updateUser: (user: UserModel) => void}): JSX.Element => {
   const [userId, setUserId] = useState('');

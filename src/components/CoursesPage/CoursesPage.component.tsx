@@ -4,11 +4,17 @@ import {CoursesList} from './../CourceList/Course-ListComponent';
 import React, {useState} from 'react';
 import {getPageData, getSearchData} from '../../services/courses.service';
 import useEffectAsync from '../../helpers/useEffectAsync';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCourses } from '../../store/selectors';
+import { actions } from '../../store/actions';
+
 
 export function CoursesPageComponent(props: any): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [loading, setLoading] = useState(false);
-  const [courses, setCourses] = useState<CourseModel[]>([]);
+  const courses = useSelector(selectCourses);
+  const dispatch = useDispatch();
+
+  console.log('cousesesNew', courses)
+
   const [coursesFound, setCoursesFound] = useState([]);
   const [searchString, setSearchString] = useState('');
   const [lastPage, setLastPage] = useState(0);
@@ -16,27 +22,23 @@ export function CoursesPageComponent(props: any): JSX.Element {
     setSearchString(str);
     loadSearchResults(searchString);
   };
-  const updateLoadingStatus = (isLoading: boolean) => setLoading(isLoading);
+
   const loadPage = (): Promise<boolean> => {
     const nextPage = lastPage + 1;
 
-    updateLoadingStatus(true);
-
     return getPageData(nextPage)
       .then((data) => {
-        setCourses([...courses, ...data.map(dataToCourse)]);
+        dispatch(actions.setCourses(nextPage, data.map(dataToCourse)))
         setLastPage(nextPage);
+
         return true;
       })
-      .catch(() => false)
-      .finally(() => updateLoadingStatus(false));
+      .catch(() => false);
   };
   const loadSearchResults = (searchString: string): Promise<boolean> => {
     if (searchString === '') {
       return Promise.resolve(false);
     }
-
-    updateLoadingStatus(true);
 
     return getSearchData(searchString)
       .then((data) => {
@@ -44,8 +46,7 @@ export function CoursesPageComponent(props: any): JSX.Element {
 
         return true;
       })
-      .catch(() => false)
-      .finally(() => updateLoadingStatus(false));
+      .catch(() => false);
   };
   const dataToCourse = (course: any) => ({...course, date: new Date(course.date)} as CourseModel);
   const renderDataSection = () => {

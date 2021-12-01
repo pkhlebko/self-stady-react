@@ -1,11 +1,7 @@
+import {UserModel} from '../models';
+
 const baseUrl = 'http://localhost:3000/';
 const getJson = (resp: Response) => resp.json();
-
-export interface UserModel {
-  id: string;
-  name: string;
-  password: string;
-}
 
 export async function getUsers(): Promise<UserModel[]> {
   return fetch(`${baseUrl}users`).then(getJson);

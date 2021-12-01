@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router';
+import { UserModel } from '../../models';
 import {addCourse} from '../../services/courses.service';
-import {UserModel} from '../../services/users.service';
 
 export function EditCoursePageComponent(props: {user?: UserModel}): JSX.Element {
   const [title, setTitle] = useState('');

@@ -4,13 +4,9 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {CoursesPageComponent} from './components/CoursesPage/CoursesPage.component';
 import {LoginPageComponent} from './components/LoginPage/LoginPage.component';
 import {EditCoursePageComponent} from './components/EditCoursePage/EditCoursePage.component';
-import {
-  getLoggedUser,
-  saveUserIdToLocalStorage,
-  eraseUserIdFromLocalStorage,
-  UserModel,
-} from './services/users.service';
+import {getLoggedUser, saveUserIdToLocalStorage, eraseUserIdFromLocalStorage} from './services/users.service';
 import {HeaderComponent} from './components/HeaderComponent/header.component';
+import {UserModel} from './models';
 
 const App = (): JSX.Element => {
   let [currentUser, setCurrentUser] = useState<UserModel | undefined>();
