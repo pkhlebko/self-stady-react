@@ -5,22 +5,22 @@ import React, {useState} from 'react';
 import {getPageData, getSearchData} from '../../services/courses.service';
 import useEffectAsync from '../../helpers/useEffectAsync';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCourses } from '../../store/selectors';
+import { selectCourses, selectSearchString } from '../../store';
 import { actions } from '../../store/actions';
 
 
 export function CoursesPageComponent(props: any): JSX.Element {
   const courses = useSelector(selectCourses);
+  const searchString = useSelector(selectSearchString);
   const dispatch = useDispatch();
 
-  console.log('cousesesNew', courses)
-
   const [coursesFound, setCoursesFound] = useState([]);
-  const [searchString, setSearchString] = useState('');
+
   const [lastPage, setLastPage] = useState(0);
+
   const updateSearchString = (str: string) => {
-    setSearchString(str);
-    loadSearchResults(searchString);
+    dispatch(actions.setSearchString(str))
+    //loadSearchResults(searchString);
   };
 
   const loadPage = (): Promise<boolean> => {
@@ -42,6 +42,7 @@ export function CoursesPageComponent(props: any): JSX.Element {
 
     return getSearchData(searchString)
       .then((data) => {
+        dispatch(actions.setCoursesFound(data.map(dataToCourse)))
         setCoursesFound(data.map(dataToCourse));
 
         return true;

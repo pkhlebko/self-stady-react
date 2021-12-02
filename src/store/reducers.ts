@@ -1,6 +1,7 @@
-import {ActionModel, actionTypes, AppStateModel} from '../models';
+import {ActionModel, AppStateModel} from '../models';
+import {actionTypes} from './actions';
 
-export const initialState: AppStateModel = {
+const initialState: AppStateModel = {
   courses: [],
   currentPage: 0,
   currentUser: undefined,
