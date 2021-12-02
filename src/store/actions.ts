@@ -1,4 +1,5 @@
 import {ActionModel, CourseModel, UserModel} from '../models';
+import {getSearchData} from '../services/courses.service';
 
 export enum actionTypes {
   SET_COURSES_FOUND,
@@ -9,8 +10,8 @@ export enum actionTypes {
 
 function setCoursesFound(coursesFound: CourseModel[]): ActionModel {
   return {
-    type: actionTypes.SET_COURSES,
-    payload: {newCourses: coursesFound},
+    type: actionTypes.SET_COURSES_FOUND,
+    payload: {coursesFound},
   };
 }
 
@@ -41,3 +42,24 @@ export const actions = {
   setCurrentUser,
   setSearchString,
 };
+
+export const thunks = {
+  fetchSearchResults
+}
+
+
+function fetchSearchResults(searchString?: string) {
+
+  return async (dispatch: any) => {
+    let coursesFound: CourseModel[] = [];
+
+    if (!searchString && searchString === '') {
+      searchString = undefined;
+    } else {
+      coursesFound = await getSearchData(searchString as string);
+    }
+    console.log(coursesFound)
+   // dispatch(setSearchString(undefined));
+    dispatch(setCoursesFound(coursesFound));
+  };
+}

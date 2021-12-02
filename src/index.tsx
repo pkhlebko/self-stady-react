@@ -4,10 +4,16 @@ import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-import {createStore} from '@reduxjs/toolkit';
+import {applyMiddleware, createStore} from '@reduxjs/toolkit';
 import {rootReducer} from './store';
 
-const appStore = createStore(rootReducer);
+import thunkMiddleware from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
+
+
+const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
+
+const appStore = createStore(rootReducer, composedEnhancer);
 
 ReactDOM.render(
   <Provider store={appStore}>

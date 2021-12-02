@@ -2,11 +2,11 @@ import {CourseModel} from '../../models';
 import {SearchField} from './../SearchField/Search-Field.component';
 import {CoursesList} from './../CourceList/Course-ListComponent';
 import React, {useState} from 'react';
-import {getPageData, getSearchData} from '../../services/courses.service';
+import {getPageData} from '../../services/courses.service';
 import useEffectAsync from '../../helpers/useEffectAsync';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCourses, selectSearchString } from '../../store';
-import { actions } from '../../store/actions';
+import { actions, thunks } from '../../store/actions';
 
 
 export function CoursesPageComponent(props: any): JSX.Element {
@@ -14,13 +14,11 @@ export function CoursesPageComponent(props: any): JSX.Element {
   const searchString = useSelector(selectSearchString);
   const dispatch = useDispatch();
 
-  const [coursesFound, setCoursesFound] = useState([]);
-
   const [lastPage, setLastPage] = useState(0);
 
   const updateSearchString = (str: string) => {
-    dispatch(actions.setSearchString(str))
-    //loadSearchResults(searchString);
+    dispatch(actions.setSearchString(str));
+    dispatch(thunks.fetchSearchResults(str));
   };
 
   const loadPage = (): Promise<boolean> => {
@@ -28,30 +26,16 @@ export function CoursesPageComponent(props: any): JSX.Element {
 
     return getPageData(nextPage)
       .then((data) => {
-        dispatch(actions.setCourses(nextPage, data.map(dataToCourse)))
+        dispatch(actions.setCourses(nextPage, data))
         setLastPage(nextPage);
 
         return true;
       })
       .catch(() => false);
   };
-  const loadSearchResults = (searchString: string): Promise<boolean> => {
-    if (searchString === '') {
-      return Promise.resolve(false);
-    }
 
-    return getSearchData(searchString)
-      .then((data) => {
-        dispatch(actions.setCoursesFound(data.map(dataToCourse)))
-        setCoursesFound(data.map(dataToCourse));
-
-        return true;
-      })
-      .catch(() => false);
-  };
-  const dataToCourse = (course: any) => ({...course, date: new Date(course.date)} as CourseModel);
   const renderDataSection = () => {
-    const coursesData = searchString === '' ? courses : coursesFound;
+    const coursesData = courses;
 
     if (coursesData && coursesData.length > 0) {
       return <CoursesList courses={coursesData}></CoursesList>;

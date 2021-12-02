@@ -1,7 +1,11 @@
 import { AppStateModel } from "../models";
 
 export function selectCourses(state: AppStateModel) {
-  return state.courses;
+  const {courses, coursesFound, searchString} = state;
+
+  console.log(searchString, courses, coursesFound)
+
+  return searchString ? coursesFound : courses;
 }
 
 export function selectCoursesFound(state: AppStateModel) {

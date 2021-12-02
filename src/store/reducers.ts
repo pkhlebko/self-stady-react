@@ -25,6 +25,11 @@ export const rootReducer = (state = initialState, action: ActionModel) => {
       return {...state, currentPage, courses, lastPage};
     case actionTypes.SET_CURRENT_USER:
       return {...state, currentUser: action.payload.user};
+    case actionTypes.SET_SEARCHSTRING:
+        return {...state, searchString: action.payload.searchString};
+    case actionTypes.SET_COURSES_FOUND:
+        return {...state, coursesFound: action.payload.coursesFound};
+
     default:
       return state;
   }
