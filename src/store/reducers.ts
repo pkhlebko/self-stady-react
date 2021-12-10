@@ -20,6 +20,9 @@ export const rootReducer = (state = initialState, action: ActionModel) => {
       } else if (newCourses.length < 10) {
         currentPage = newPage;
         lastPage = true;
+      } else {
+        currentPage = newPage;
+        lastPage = false;
       }
 
       return {...state, currentPage, courses, lastPage};

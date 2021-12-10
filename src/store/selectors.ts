@@ -1,11 +1,9 @@
-import { AppStateModel } from "../models";
+import {AppStateModel, CoursesPageDataType} from '../models';
 
-export function selectCourses(state: AppStateModel) {
-  const {courses, coursesFound, searchString} = state;
+export function getCoursesPageContent(state: AppStateModel): CoursesPageDataType {
+  const {courses, coursesFound, searchString, currentPage, lastPage} = state;
 
-  console.log(searchString, courses, coursesFound)
-
-  return searchString ? coursesFound : courses;
+  return {courses, coursesFound, searchString, currentPage, lastPage};
 }
 
 export function selectCoursesFound(state: AppStateModel) {

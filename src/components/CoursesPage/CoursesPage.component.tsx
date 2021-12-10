@@ -1,41 +1,25 @@
-import {CourseModel} from '../../models';
 import {SearchField} from './../SearchField/Search-Field.component';
 import {CoursesList} from './../CourceList/Course-ListComponent';
 import React, {useState} from 'react';
 import {getPageData} from '../../services/courses.service';
-import useEffectAsync from '../../helpers/useEffectAsync';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCourses, selectSearchString } from '../../store';
+import { getCoursesPageContent } from '../../store';
 import { actions, thunks } from '../../store/actions';
+import useEffectAsync from '../../helpers/useEffectAsync';
 
 
 export function CoursesPageComponent(props: any): JSX.Element {
-  const courses = useSelector(selectCourses);
-  const searchString = useSelector(selectSearchString);
+  const {courses, coursesFound, searchString, currentPage, lastPage} = useSelector(getCoursesPageContent);
   const dispatch = useDispatch();
-
-  const [lastPage, setLastPage] = useState(0);
 
   const updateSearchString = (str: string) => {
     dispatch(actions.setSearchString(str));
     dispatch(thunks.fetchSearchResults(str));
   };
 
-  const loadPage = (): Promise<boolean> => {
-    const nextPage = lastPage + 1;
-
-    return getPageData(nextPage)
-      .then((data) => {
-        dispatch(actions.setCourses(nextPage, data))
-        setLastPage(nextPage);
-
-        return true;
-      })
-      .catch(() => false);
-  };
-
+  const loadPage = () => dispatch(thunks.fetchPageData(currentPage));
   const renderDataSection = () => {
-    const coursesData = courses;
+    const coursesData = searchString ? coursesFound : courses;
 
     if (coursesData && coursesData.length > 0) {
       return <CoursesList courses={coursesData}></CoursesList>;
@@ -47,7 +31,6 @@ export function CoursesPageComponent(props: any): JSX.Element {
   useEffectAsync(() => {
     loadPage();
   }, []);
-
   return (
     <>
       <SearchField updateSearchString={updateSearchString}></SearchField>
@@ -58,7 +41,7 @@ export function CoursesPageComponent(props: any): JSX.Element {
 
       <div className="row">
         <div className="column">
-          <button onClick={() => loadPage()}>Load more</button>
+          <button onClick={() => loadPage()} disabled={lastPage}>Load more</button>
         </div>
       </div>
     </>

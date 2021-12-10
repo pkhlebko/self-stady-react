@@ -1,5 +1,5 @@
 import {ActionModel, CourseModel, UserModel} from '../models';
-import {getSearchData} from '../services/courses.service';
+import {getPageData, getSearchData} from '../services/courses.service';
 
 export enum actionTypes {
   SET_COURSES_FOUND,
@@ -43,13 +43,15 @@ export const actions = {
   setSearchString,
 };
 
-export const thunks = {
-  fetchSearchResults
+function fetchPageData(currentPage: number) {
+  return async (dispatch: any) => {
+    const nextPage = currentPage + 1;
+    console.log('nextPage', nextPage);
+    dispatch(actions.setCourses(nextPage, await getPageData(nextPage)));
+  };
 }
 
-
 function fetchSearchResults(searchString?: string) {
-
   return async (dispatch: any) => {
     let coursesFound: CourseModel[] = [];
 
@@ -58,8 +60,12 @@ function fetchSearchResults(searchString?: string) {
     } else {
       coursesFound = await getSearchData(searchString as string);
     }
-    console.log(coursesFound)
-   // dispatch(setSearchString(undefined));
+
     dispatch(setCoursesFound(coursesFound));
   };
 }
+
+export const thunks = {
+  fetchPageData,
+  fetchSearchResults,
+};

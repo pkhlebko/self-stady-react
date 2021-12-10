@@ -8,3 +8,8 @@ export interface AppStateModel {
   lastPage: boolean;
   searchString?: string;
 }
+
+export type CoursesPageDataType = Pick<
+  AppStateModel,
+  'courses' | 'coursesFound' | 'searchString' | 'currentPage' | 'lastPage'
+>;

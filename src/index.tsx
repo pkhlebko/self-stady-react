@@ -7,11 +7,10 @@ import reportWebVitals from './reportWebVitals';
 import {applyMiddleware, createStore} from '@reduxjs/toolkit';
 import {rootReducer} from './store';
 
-import thunkMiddleware from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import thunkMiddleware from 'redux-thunk';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
-
-const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
+const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
 const appStore = createStore(rootReducer, composedEnhancer);
 
