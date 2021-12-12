@@ -5,14 +5,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import {applyMiddleware, createStore} from '@reduxjs/toolkit';
-import {rootReducer} from './store';
+import {appReducer} from './store';
 
 import thunkMiddleware from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
-const appStore = createStore(rootReducer, composedEnhancer);
+const appStore = createStore(appReducer, composedEnhancer);
 
 ReactDOM.render(
   <Provider store={appStore}>

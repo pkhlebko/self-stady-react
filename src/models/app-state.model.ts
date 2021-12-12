@@ -1,15 +1,20 @@
 import {CourseModel, UserModel} from '.';
 
-export interface AppStateModel {
+export interface CoursesStateModel {
   courses: CourseModel[];
   coursesFound?: CourseModel[];
   currentPage: 0;
-  currentUser?: UserModel;
   lastPage: boolean;
   searchString?: string;
 }
 
-export type CoursesPageDataType = Pick<
-  AppStateModel,
-  'courses' | 'coursesFound' | 'searchString' | 'currentPage' | 'lastPage'
->;
+export interface UsersStateModel {
+  currentUser?: UserModel;
+}
+
+export interface AppStateModel {
+  coursesState: CoursesStateModel;
+  usersState: UsersStateModel;
+}
+
+export type IntitalStateModels = CoursesStateModel | UsersStateModel;

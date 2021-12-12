@@ -2,10 +2,10 @@ import {ActionModel, CourseModel, UserModel} from '../models';
 import {getPageData, getSearchData} from '../services/courses.service';
 
 export enum actionTypes {
-  SET_COURSES_FOUND,
-  SET_COURSES,
-  SET_CURRENT_USER,
-  SET_SEARCHSTRING,
+  SET_COURSES_FOUND = 'SET_COURSES_FOUND',
+  SET_COURSES = 'SET_COURSES',
+  SET_CURRENT_USER = 'SET_CURRENT_USER',
+  SET_SEARCHSTRING = 'SET_SEARCHSTRING',
 }
 
 function setCoursesFound(coursesFound: CourseModel[]): ActionModel {

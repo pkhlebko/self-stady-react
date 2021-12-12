@@ -1,7 +1,6 @@
 import {SearchField} from './../SearchField/Search-Field.component';
 import {CoursesList} from './../CourceList/Course-ListComponent';
-import React, {useState} from 'react';
-import {getPageData} from '../../services/courses.service';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCoursesPageContent } from '../../store';
 import { actions, thunks } from '../../store/actions';
