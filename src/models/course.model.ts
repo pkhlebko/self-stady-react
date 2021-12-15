@@ -4,5 +4,5 @@ export interface CourseModel {
   description: string;
   authorID: string;
   date: Date;
-  rating?: number;
+  rating: {[key: string]: number};
 }

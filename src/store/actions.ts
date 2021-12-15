@@ -6,6 +6,7 @@ export enum actionTypes {
   SET_COURSES = 'SET_COURSES',
   SET_CURRENT_USER = 'SET_CURRENT_USER',
   SET_SEARCHSTRING = 'SET_SEARCHSTRING',
+  UPDATE_COURSE = 'SET_COURSE',
 }
 
 function setCoursesFound(coursesFound: CourseModel[]): ActionModel {
@@ -19,6 +20,13 @@ function setCourses(newPage: number, newCourses: CourseModel[]): ActionModel {
   return {
     type: actionTypes.SET_COURSES,
     payload: {newPage, newCourses},
+  };
+}
+
+function updateCourse(updatedCourse: CourseModel): ActionModel {
+  return {
+    type: actionTypes.UPDATE_COURSE,
+    payload: {updatedCourse},
   };
 }
 
@@ -41,12 +49,13 @@ export const actions = {
   setCoursesFound,
   setCurrentUser,
   setSearchString,
+  updateCourse
 };
 
-function fetchPageData(currentPage: number) {
+function fetchCoursesPageData(currentPage: number) {
   return async (dispatch: any) => {
     const nextPage = currentPage + 1;
-    console.log('nextPage', nextPage);
+
     dispatch(actions.setCourses(nextPage, await getPageData(nextPage)));
   };
 }
@@ -66,6 +75,6 @@ function fetchSearchResults(searchString?: string) {
 }
 
 export const thunks = {
-  fetchPageData,
+  fetchPageData: fetchCoursesPageData,
   fetchSearchResults,
 };

@@ -14,6 +14,7 @@ export function EditCoursePageComponent(props: {user?: UserModel}): JSX.Element 
       title,
       description,
       date: new Date(),
+      rating: {}
     });
     redirectToMain();
   };

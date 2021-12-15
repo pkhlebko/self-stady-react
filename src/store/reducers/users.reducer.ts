@@ -1,4 +1,4 @@
-import {actionTypes} from '..';
+import {actionTypes} from '../actions';
 import {ActionModel, UsersStateModel} from '../../models';
 import {createReducer} from '../utils';
 
@@ -10,6 +10,8 @@ function setCurrentUser(state: UsersStateModel, action: ActionModel): UsersState
   return {...state, currentUser: action.payload.user};
 }
 
-export const usersReducer = createReducer(usersState, {
-  [actionTypes.SET_CURRENT_USER]: setCurrentUser,
-});
+export function getUsersReducer() {
+  return createReducer(usersState, {
+    [actionTypes.SET_CURRENT_USER]: setCurrentUser,
+  });
+}
