@@ -1,5 +1,4 @@
 import {ActionModel, CourseModel, UserModel} from '../models';
-import {getPageData, getSearchData} from '../services/courses.service';
 
 export enum actionTypes {
   SET_COURSES_FOUND = 'SET_COURSES_FOUND',
@@ -30,7 +29,7 @@ function updateCourse(updatedCourse: CourseModel): ActionModel {
   };
 }
 
-function setCurrentUser(user: UserModel): ActionModel {
+function setCurrentUser(user: UserModel|undefined): ActionModel {
   return {
     type: actionTypes.SET_CURRENT_USER,
     payload: {user},
@@ -50,31 +49,4 @@ export const actions = {
   setCurrentUser,
   setSearchString,
   updateCourse
-};
-
-function fetchCoursesPageData(currentPage: number) {
-  return async (dispatch: any) => {
-    const nextPage = currentPage + 1;
-
-    dispatch(actions.setCourses(nextPage, await getPageData(nextPage)));
-  };
-}
-
-function fetchSearchResults(searchString?: string) {
-  return async (dispatch: any) => {
-    let coursesFound: CourseModel[] = [];
-
-    if (!searchString && searchString === '') {
-      searchString = undefined;
-    } else {
-      coursesFound = await getSearchData(searchString as string);
-    }
-
-    dispatch(setCoursesFound(coursesFound));
-  };
-}
-
-export const thunks = {
-  fetchPageData: fetchCoursesPageData,
-  fetchSearchResults,
 };

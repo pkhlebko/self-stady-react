@@ -1,11 +1,9 @@
-import {SearchField} from './../SearchField/Search-Field.component';
+import {actions, getCoursesPageContent, thunks} from '../../store';
+import {useDispatch, useSelector} from 'react-redux';
 import {CoursesList} from './../CourceList/Course-ListComponent';
+import {SearchField} from './../SearchField/Search-Field.component';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCoursesPageContent } from '../../store';
-import { actions, thunks } from '../../store/actions';
 import useEffectAsync from '../../helpers/useEffectAsync';
-
 
 export function CoursesPageComponent(props: any): JSX.Element {
   const {courses, coursesFound, searchString, currentPage, lastPage} = useSelector(getCoursesPageContent);
@@ -16,7 +14,7 @@ export function CoursesPageComponent(props: any): JSX.Element {
     dispatch(thunks.fetchSearchResults(str));
   };
 
-  const loadPage = () => dispatch(thunks.fetchPageData(currentPage));
+  const loadPage = () => dispatch(thunks.fetchCoursesPage(currentPage));
   const renderDataSection = () => {
     const coursesData = searchString ? coursesFound : courses;
 
@@ -40,7 +38,9 @@ export function CoursesPageComponent(props: any): JSX.Element {
 
       <div className="row">
         <div className="column">
-          <button onClick={() => loadPage()} disabled={lastPage}>Load more</button>
+          <button onClick={() => loadPage()} disabled={lastPage}>
+            Load more
+          </button>
         </div>
       </div>
     </>

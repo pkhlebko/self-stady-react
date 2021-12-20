@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {CoursesPageComponent} from './components/CoursesPage/CoursesPage.component';
@@ -7,22 +7,25 @@ import {EditCoursePageComponent} from './components/EditCoursePage/EditCoursePag
 import {getLoggedUser, saveUserIdToLocalStorage, eraseUserIdFromLocalStorage} from './services/users.service';
 import {HeaderComponent} from './components/HeaderComponent/header.component';
 import {UserModel} from './models';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions, selectCurrentUser } from './store';
 
 const App = (): JSX.Element => {
-  let [currentUser, setCurrentUser] = useState<UserModel | undefined>();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    getLoggedUser().then((user) => user && setCurrentUser(user));
-  }, []);
+    getLoggedUser().then((user) => user && dispatch(actions.setCurrentUser(user)));
+  }, [dispatch]);
 
   function logInUser(user: UserModel) {
-    setCurrentUser(user);
+    dispatch(actions.setCurrentUser(user))
     saveUserIdToLocalStorage(user);
   }
 
   function logOutUser() {
     eraseUserIdFromLocalStorage();
-    setCurrentUser(undefined);
+    dispatch(actions.setCurrentUser(undefined))
   }
 
   return (
