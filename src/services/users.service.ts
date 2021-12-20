@@ -3,36 +3,38 @@ import {UserModel} from '../models';
 const baseUrl = 'http://localhost:3000/';
 const getJson = (resp: Response) => resp.json();
 
-export async function getUsers(): Promise<UserModel[]> {
-  return fetch(`${baseUrl}users`).then(getJson);
-}
+export class UserService {
+  static async getUsers(): Promise<UserModel[]> {
+    return fetch(`${baseUrl}users`).then(getJson);
+  }
 
-export async function getUserById(id: string): Promise<UserModel | null> {
-  return fetch(`${baseUrl}users?id=${id}`)
-    .then(getJson)
-    .then((users: UserModel[]) => (users.length > 0 ? users[0] : null));
-}
+  static async getUserById(id: string): Promise<UserModel | null> {
+    return fetch(`${baseUrl}users?id=${id}`)
+      .then(getJson)
+      .then((users: UserModel[]) => (users.length > 0 ? users[0] : null));
+  }
 
-export async function logUserIn(login: string, password: string): Promise<UserModel | null> {
-  const user = await getUserById(login);
+  static async logUserIn(login: string, password: string): Promise<UserModel | null> {
+    const user = await UserService.getUserById(login);
 
-  return user?.password === password ? user : null;
-}
+    return user?.password === password ? user : null;
+  }
 
-export function loadUserIdFromLocalStorage(): string | null {
-  return localStorage.getItem('userId');
-}
+  static loadUserIdFromLocalStorage(): string | null {
+    return localStorage.getItem('userId');
+  }
 
-export function saveUserIdToLocalStorage(user: UserModel): void {
-  localStorage.setItem('userId', user.id);
-}
+  static saveUserIdToLocalStorage(user: UserModel): void {
+    localStorage.setItem('userId', user.id);
+  }
 
-export function eraseUserIdFromLocalStorage(): void {
-  localStorage.removeItem('userId');
-}
+  static eraseUserIdFromLocalStorage(): void {
+    localStorage.removeItem('userId');
+  }
 
-export async function getLoggedUser(): Promise<UserModel | null> {
-  const userId = loadUserIdFromLocalStorage();
+  static async getLoggedUser(): Promise<UserModel | null> {
+    const userId = UserService.loadUserIdFromLocalStorage();
 
-  return userId ? getUserById(userId) : Promise.resolve(null);
+    return userId ? UserService.getUserById(userId) : Promise.resolve(null);
+  }
 }

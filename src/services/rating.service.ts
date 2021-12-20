@@ -1,7 +1,9 @@
-const average = (arr: number[]) => arr.reduce(( p, c ) => p + c, 0 ) / arr.length;
+const average = (arr: number[]) => arr.reduce((p, c) => p + c, 0) / arr.length;
 
-export function getRating(rating: {[key: string]: number}): number {
-  const values = Object.values(rating);
+export class RatingService {
+  public static getRating(rating: {[key: string]: number}): number {
+    const values = Object.values(rating);
 
-  return values.length > 0 ? average(values) : 0;
+    return values.length > 0 ? average(values) : 0;
+  }
 }

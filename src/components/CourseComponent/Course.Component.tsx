@@ -1,6 +1,6 @@
-import {thunks, selectCurrentUser} from '../../store';
 import {CourseModel, UserModel} from '../../models';
-import {getRating} from '../../services/rating.service';
+import {RatingService} from '../../services';
+import {thunks, selectCurrentUser} from '../../store';
 import {useDispatch, useSelector} from 'react-redux';
 
 export function CourseComponent(props: any) {
@@ -33,7 +33,7 @@ export function CourseComponent(props: any) {
       </h3>
       <p>{description}</p>
       <p>
-        {getRating(rating)} {getRateButtons(currentUser)}
+        {RatingService.getRating(rating)} {getRateButtons(currentUser)}
       </p>
     </div>
   );
