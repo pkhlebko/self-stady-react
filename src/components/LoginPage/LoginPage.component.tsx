@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import {logUserIn, UserModel} from '../../services/users.service';
+import {UserModel} from '../../models';
+import {UserService} from '../../services';
 
 export const LoginPageComponent = (props: {updateUser: (user: UserModel) => void}): JSX.Element => {
   const [userId, setUserId] = useState('');
@@ -14,7 +15,7 @@ export const LoginPageComponent = (props: {updateUser: (user: UserModel) => void
   async function handleSubmit(event: any) {
     event.preventDefault();
 
-    const user = await logUserIn(userId, password);
+    const user = await UserService.logUserIn(userId, password);
 
     if (user) {
       props.updateUser(user);

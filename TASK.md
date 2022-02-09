@@ -49,8 +49,16 @@ https://reactrouter.com/web/guides/quick-start
 1. Создать сторы для данных кусов и пользователей.
 2. Дать возможность каждому авторизированному пользователю выставить курсам оценку от 1 до 5.
 
+
+## 5. Homeassignment
+
+0. Создать как минимум по два теста к компонентам, редъюсерам и санкам.
+1. Создать как минимум 2 itegration теста.
+2. Создать как минимум 2 e2e теста.
+
 Материалы:
 
-https://videoportal.epam.com/playlist/qaBVb4ag/play/mYRxBo7W
-https://redux.js.org/tutorials/essentials/part-1-overview-concepts
-https://www.youtube.com/watch?v=hpR-X2hTcqg
+https://videoportal.epam.com/playlist/qaBVb4ag/play/qaBypm7g
+https://redux.js.org/usage/writing-tests
+https://testing-library.com/docs/react-testing-library/example-intro
+https://blog.logrocket.com/react-end-to-end-testing-jest-puppeteer/

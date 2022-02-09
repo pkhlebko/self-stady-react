@@ -1,19 +1,23 @@
 import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
-import {addCourse} from '../../services/courses.service';
-import {UserModel} from '../../services/users.service';
+import {UserModel} from '../../models';
+import {CoursesService} from '../../services';
+import {selectCurrentUser} from '../../store';
 
 export function EditCoursePageComponent(props: {user?: UserModel}): JSX.Element {
+  const currentUser = useSelector(selectCurrentUser);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const history = useHistory();
   const redirectToMain = () => history.push('/');
   const onSubmitClick = async () => {
-    await addCourse({
-      authorID: 'pablo',
+    await CoursesService.addCourse({
+      authorID: currentUser?.id,
       title,
       description,
       date: new Date(),
+      rating: {},
     });
     redirectToMain();
   };

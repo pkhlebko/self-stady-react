@@ -1,8 +1,4 @@
-export interface CourseModel {
-  id?: number;
-  title: string;
-  description: string;
-  authorID: string;
-  date: Date;
-  rating?: number;
-}
+export * from './action.models';
+export * from './app-state.model';
+export * from './course.model';
+export * from './user.model';

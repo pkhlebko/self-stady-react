@@ -1,7 +1,15 @@
 {
   "users": [
-    {"id": "pablo", "name": "Pablo", "password": "123456"},
-    {"id": "mike", "name": "Mike", "password": "123456"}
+    {
+      "id": "pablo",
+      "name": "Pablo",
+      "password": "123456"
+    },
+    {
+      "id": "mike",
+      "name": "Mike",
+      "password": "123456"
+    }
   ],
   "courses": [
     {
@@ -10,7 +18,10 @@
       "description": "Angular 4 course",
       "authorID": "pablo",
       "date": "2020-04-16T10:55:55.058Z",
-      "rating": 3
+      "rating": {
+        "pablo": 2,
+        "mike": 4
+      }
     },
     {
       "id": 2,
@@ -18,7 +29,10 @@
       "description": "Angular.js course",
       "authorID": "mike",
       "date": "2021-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": {
+        "pablo": 2,
+        "mike": 3
+      }
     },
     {
       "id": 3,
@@ -26,7 +40,9 @@
       "description": "Angular 6 course",
       "authorID": "pablo",
       "date": "2020-05-16T10:55:55.058Z",
-      "rating": 3
+      "rating": {
+        "pablo": 2
+      }
     },
     {
       "id": 4,
@@ -34,7 +50,10 @@
       "description": "Angular 7 course",
       "authorID": "mike",
       "date": "2019-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": {
+        "pablo": 5,
+        "mike": 4
+      }
     },
     {
       "id": 5,
@@ -42,7 +61,10 @@
       "description": "Angular 8 course",
       "authorID": "mike",
       "date": "2018-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": {
+        "pablo": 5,
+        "mike": 2
+      }
     },
     {
       "id": 6,
@@ -50,7 +72,9 @@
       "description": "Angular 2 course",
       "authorID": "mike",
       "date": "2018-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": {
+        "mike": 4
+      }
     },
     {
       "id": 7,
@@ -58,7 +82,7 @@
       "description": "Angular 4 course",
       "authorID": "pablo",
       "date": "2020-04-16T10:55:55.058Z",
-      "rating": 3
+      "rating": {}
     },
     {
       "id": 8,
@@ -66,7 +90,7 @@
       "description": "Angular.js course",
       "authorID": "mike",
       "date": "2021-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": {}
     },
     {
       "id": 9,
@@ -74,7 +98,7 @@
       "description": "Angular 6 course",
       "authorID": "pablo",
       "date": "2020-05-16T10:55:55.058Z",
-      "rating": 3
+      "rating": {}
     },
     {
       "id": 10,
@@ -82,7 +106,7 @@
       "description": "Angular 7 course",
       "authorID": "mike",
       "date": "2019-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": {}
     },
     {
       "id": 11,
@@ -90,7 +114,7 @@
       "description": "Angular 8 course",
       "authorID": "mike",
       "date": "2018-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": {}
     },
     {
       "id": 12,
@@ -98,7 +122,7 @@
       "description": "Angular 2 course",
       "authorID": "mike",
       "date": "2018-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": {}
     }
   ]
 }
